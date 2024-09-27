@@ -1,5 +1,6 @@
 import { api } from '@/data/api'
 import { Product } from '@/data/types/product'
+import { Metadata } from 'next'
 import Image from 'next/image'
 
 async function getProduct(slug: string): Promise<Product> {
@@ -10,6 +11,17 @@ async function getProduct(slug: string): Promise<Product> {
   })
   const product = await response.json()
   return product
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string }
+}): Promise<Metadata> {
+  const product = await getProduct(params.slug)
+  return {
+    title: product.title,
+  }
 }
 
 export default async function ProductPage({
@@ -64,6 +76,18 @@ export default async function ProductPage({
               className="flex h-9 w-14 items-center justify-center rounded-full border border-zinc-400 bg-zinc-800 text-sm font-semibold"
             >
               M
+            </button>
+            <button
+              type="button"
+              className="flex h-9 w-14 items-center justify-center rounded-full border border-zinc-400 bg-zinc-800 text-sm font-semibold"
+            >
+              G
+            </button>
+            <button
+              type="button"
+              className="flex h-9 w-14 items-center justify-center rounded-full border border-zinc-400 bg-zinc-800 text-sm font-semibold"
+            >
+              GG
             </button>
           </div>
         </div>
